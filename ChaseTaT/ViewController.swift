@@ -7,45 +7,38 @@
 
 import UIKit
 
-struct QuizQuestionData: Codable {
-    let category : String
-    var questions: [QuestionItems]
-}
+var amountToWin = [20000, 5000, 1000]
 
-struct QuestionItems: Codable {
-    let question_text : String
-    let answers : [String]
-    let correct : Int
-}
-
-func getJSONQuestionData() -> QuizQuestionData? {
-    let bundleFolderURL = Bundle.main.url(forResource: "chase_questions", withExtension: "json")!
-    do {
-        let retrievedData = try Data(contentsOf: bundleFolderURL)
-        do {
-            let theQuizData = try JSONDecoder().decode(QuizQuestionData.self, from: retrievedData)
-            return theQuizData
-        } catch {
-            print("couldn't decode file contents"); return nil
-        }
-    } catch {
-        print("couldn't retrieve file contents"); return nil
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
     }
-}
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return CGFloat(100)
+        }
 
-class ViewController: UIViewController {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Set cell to the coresponding persons name in staff
+            
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        var content = UIListContentConfiguration.cell()
+        
+        content.text = if indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 {
+            "£\(amountToWin[indexPath.row - 2])"
+        } else {
+            ""
+        }
+
+        cell.contentConfiguration = content
+        return cell
+            
+        }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(getJSONQuestionData()!)
         // Do any additional setup after loading the view.
-        
-        let  theQuizQuestions = getJSONQuestionData()
-        if theQuizQuestions != nil {
-            for aQuestion in theQuizQuestions!.questions  {
-                print(aQuestion.question_text)
-            }
-        }
     }
 
 
