@@ -7,7 +7,8 @@
 
 import UIKit
 
-var amountToWin = [20000, 5000, 1000]
+
+var amountToWin = [30000, 7000, 1000]
 
 class ViewController: UIViewController {
     @IBOutlet weak var mainLabel: UILabel!
@@ -35,9 +36,41 @@ class ViewController: UIViewController {
         return CGFloat(ofset + slant)
     }
     
+    func makeButtonSelected(to button: UIButton){
+        button.backgroundColor = UIColor(red: 5/255.0, green: 7/255.0, blue: 82/255.0, alpha: 1)
+        button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+    }
     
-    @objc func buttonClick(_ sender: UIButton){
-        print("clicked")
+    func makeButtonHighlighted(to button: UIButton){
+        button.backgroundColor = UIColor(red: 10/255.0, green: 172/255.0, blue: 193/255.0, alpha: 1)
+        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+    }
+    
+    func makeButtonUnfocused(to button: UIButton){
+        button.backgroundColor = UIColor(red: 7/255.0, green: 177/255.0, blue: 158/255.0, alpha: 1)
+        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+    }
+    
+    @objc func rungClicked(_ sender: UIButton){
+        // When an offer is selected, need to unfocus all rungs above and focus all rungs below, along with emptying all other rungs
+        
+        let index = rungs.firstIndex(of: sender)!
+        print("clicked rung \(index+1)")
+        if (2...4).contains(index){
+            makeButtonSelected(to: rungs[index])
+            for (i, button) in rungs.enumerated(){
+                if i < index {
+                    makeButtonUnfocused(to: button)
+                    button.setTitle("", for: .normal)
+                } else if i == index {
+                    makeButtonSelected(to: button)
+                } else {
+                    makeButtonSelected(to: button)
+                    button.setTitle("", for: .normal)
+                }
+            }
+            
+        }
     }
     
     override func viewDidLoad() {
@@ -53,25 +86,23 @@ class ViewController: UIViewController {
         // Set each rung (Money, Colour)
         for (index, rung) in rungs.enumerated() {
             rung.titleLabel?.font = UIFont.systemFont(ofSize: 40)
-            rung.addTarget(self, action: #selector(buttonClick(_:)), for: .touchUpInside)
+            rung.addTarget(self, action: #selector(rungClicked(_:)), for: .touchUpInside)
             if (2...4).contains(index) {
                 rung.setTitle("£\(amountToWin[index - 2])", for: .normal)
                 if index == 3 {
-                    rung.backgroundColor = UIColor(red: 5/255.0, green: 7/255.0, blue: 82/255.0, alpha: 1)
+                    makeButtonSelected(to: rung)
                 } else {
-                    rung.backgroundColor = UIColor(red: 10/255.0, green: 172/255.0, blue: 193/255.0, alpha: 1)
-                    rung.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+                    makeButtonHighlighted(to: rung)
                 }
             } else {
                 rung.setTitle("", for: .normal)
-                rung.backgroundColor = UIColor(red: 7/255.0, green: 177/255.0, blue: 158/255.0, alpha: 1)
+                makeButtonUnfocused(to: rung)
             }
         }
         
         // Set Label
         mainLabel.text = "Select an Offer: "
         
-        // Register a button click
     }
 
 
