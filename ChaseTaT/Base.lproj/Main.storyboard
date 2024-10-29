@@ -92,14 +92,67 @@
                         <outlet property="rung5" destination="Mit-VS-b2E" id="efW-8J-72o"/>
                         <outlet property="rung6" destination="691-je-T7A" id="xJe-gz-yYY"/>
                         <outlet property="rung7" destination="8Ua-EJ-IFs" id="KuE-AL-ORJ"/>
+                        <segue destination="ro9-yb-xZg" kind="presentation" identifier="toQuestion" modalPresentationStyle="fullScreen" id="JbG-l4-lJI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-19.083969465648853" y="-28.169014084507044"/>
+            <point key="canvasLocation" x="28" y="-30"/>
+        </scene>
+        <!--Question View Controller-->
+        <scene sceneID="J5i-kf-QFz">
+            <objects>
+                <viewController id="ro9-yb-xZg" customClass="QuestionViewController" customModule="ChaseTaT" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="l8a-A1-tcs">
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rev-9a-Glb">
+                                <rect key="frame" x="16" y="205" width="370" height="93"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EU4-a3-SpV">
+                                <rect key="frame" x="27" y="388" width="111" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvE-Kc-Frd">
+                                <rect key="frame" x="146" y="388" width="111" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLz-fp-UXm">
+                                <rect key="frame" x="265" y="388" width="111" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Button"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hw9-lj-gT8"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="g1H-ZJ-xzm"/>
+                    <connections>
+                        <outlet property="answer1" destination="EU4-a3-SpV" id="ErM-dS-wGA"/>
+                        <outlet property="answer2" destination="GvE-Kc-Frd" id="B3O-x5-wT1"/>
+                        <outlet property="answer3" destination="YLz-fp-UXm" id="KCt-GB-nKi"/>
+                        <outlet property="questionText" destination="Rev-9a-Glb" id="FYO-pg-2kp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gdl-T7-LTp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="759.70149253731336" y="-29.51945080091533"/>
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
