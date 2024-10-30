@@ -33,6 +33,37 @@ func getJSONQuestionData() -> QuizQuestionData? {
     }
 }
 
+// The next 3 functions just change the way the buttons look
+func makeButtonSelected(to button: UIButton){
+    button.backgroundColor = UIColor(red: 5/255.0, green: 7/255.0, blue: 82/255.0, alpha: 1)
+    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+}
+
+func makeButtonHighlighted(to button: UIButton){
+    button.backgroundColor = UIColor(red: 7/255.0, green: 177/255.0, blue: 158/255.0, alpha: 1)
+    button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+}
+
+func makeButtonUnfocused(to button: UIButton){
+    button.backgroundColor = UIColor(red: 10/255.0, green: 172/255.0, blue: 193/255.0, alpha: 1)
+    button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+}
+
+func makeButtonOptional(to button: UIButton){
+    button.backgroundColor = UIColor(red: 67/255.0, green: 113/255.0, blue: 110/255.0, alpha: 1)
+    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+}
+
+func makeButtonCorrect(to button: UIButton){
+    button.backgroundColor = UIColor(red: 75/255.0, green: 253/255.0, blue: 158/255.0, alpha: 1)
+    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+}
+
+func makeButtonChasers(to button: UIButton){
+    button.layer.borderWidth = 2
+    button.layer.borderColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1).cgColor
+}
+
 
 class ViewController: UIViewController {
     var amountToWin = [30000, 7000, 1000]
@@ -64,22 +95,6 @@ class ViewController: UIViewController {
         mask.path = path.cgPath
         button.layer.mask = mask
         return CGFloat(ofset + slant)
-    }
-    
-    // The next 3 functions just change the way the buttons look
-    func makeButtonSelected(to button: UIButton){
-        button.backgroundColor = UIColor(red: 5/255.0, green: 7/255.0, blue: 82/255.0, alpha: 1)
-        button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-    }
-    
-    func makeButtonHighlighted(to button: UIButton){
-        button.backgroundColor = UIColor(red: 7/255.0, green: 177/255.0, blue: 158/255.0, alpha: 1)
-        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-    }
-    
-    func makeButtonUnfocused(to button: UIButton){
-        button.backgroundColor = UIColor(red: 10/255.0, green: 172/255.0, blue: 193/255.0, alpha: 1)
-        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
     }
     
     @objc func rungClicked(_ sender: UIButton){
