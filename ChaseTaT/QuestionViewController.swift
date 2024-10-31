@@ -22,17 +22,26 @@ class QuestionViewController: UIViewController {
     var chasersAnswer = -1
     @IBOutlet weak var chaserToken: UILabel!
     @IBOutlet weak var playerToken: UILabel!
-    let chaserTime = Int.random(in: (8...15)) // What time the chaser answers
-
+    let chaserTime = Int.random(in: (8...14)) // What time the chaser answers
+    var name = ""
+    @IBOutlet weak var unwindButton: UIButton!
+    var playerWasCorrect = false
+    var chaserWasCorrect = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         chaserToken.isHidden = true
         playerToken.isHidden = true
+        playerToken.text = name
+        chaserToken.text = "Chaser"
+        unwindButton.isHidden = true
+        makeButtonSelected(to: unwindButton)
+        unwindButton.setTitle("Return to the Ladder", for: .normal)
         
         // Load question info onto the view
-        print("Answer: \(question!.answers[question!.correct]) ")
+        print("Answer: \(question!.answers[question!.correct-1]) ")
         questionText.text = question!.question_text
         answers = [answer1, answer2, answer3]
         for (index, answer) in answers.enumerated() {
@@ -49,11 +58,12 @@ class QuestionViewController: UIViewController {
     }
     
     @objc func answerClicked(_ sender: UIButton){
-        // Highlight players  choice
+        // Highlight players choice
         if selectedAnswer != -1 {
             return
         }
         selectedAnswer = answers.firstIndex(of: sender)!
+        if selectedAnswer == question!.correct - 1 { playerWasCorrect = true }
         print("Selected: \(question!.answers[selectedAnswer]) ")
         makeButtonHighlighted(to: answers[selectedAnswer])
         playerToken.isHidden = false
@@ -74,7 +84,8 @@ class QuestionViewController: UIViewController {
             stopClock()
             
             makeButtonCorrect(to: answers[question!.correct - 1])
-            makeButtonChasers(to: answers[chasersAnswer])
+            makeButtonChasersAnswer(to: answers[chasersAnswer])
+            unwindButton.isHidden = false
             
         }
     }
@@ -94,10 +105,11 @@ class QuestionViewController: UIViewController {
             while x == question!.correct - 1 {
                 x = Int.random(in: (1...3)) - 1
             }
+            chaserWasCorrect = false
         }
         return x
     }
-     
+    
 
     /*
     // MARK: - Navigation
