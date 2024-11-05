@@ -182,7 +182,6 @@
                         <outlet property="rung6" destination="691-je-T7A" id="xJe-gz-yYY"/>
                         <outlet property="rung7" destination="8Ua-EJ-IFs" id="KuE-AL-ORJ"/>
                         <segue destination="ro9-yb-xZg" kind="presentation" identifier="toQuestion" modalPresentationStyle="fullScreen" id="JbG-l4-lJI"/>
-                        <segue destination="GaV-bz-zzG" kind="unwind" unwindAction="unwindToMainGame:" id="F8G-er-e9u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -260,9 +259,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="UnwindButton"/>
-                                <connections>
-                                    <segue destination="GaV-bz-zzG" kind="unwind" unwindAction="unwindToMainGame:" id="oib-Ln-RMW"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hw9-lj-gT8"/>
@@ -278,6 +274,7 @@
                         <outlet property="playerToken" destination="fHL-fb-Ih1" id="OWc-ft-QOl"/>
                         <outlet property="questionText" destination="Rev-9a-Glb" id="FYO-pg-2kp"/>
                         <outlet property="unwindButton" destination="rIE-B8-f5D" id="9i8-fd-ogs"/>
+                        <segue destination="GaV-bz-zzG" kind="unwind" identifier="unwindToMainGame" unwindAction="unwindToMainGame:" id="AXt-pH-41f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gdl-T7-LTp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -295,13 +292,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

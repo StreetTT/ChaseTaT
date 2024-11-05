@@ -53,6 +53,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var mainlLabel: UILabel!
     var chaserIndex = -1
     
+    
+    func getAllMP3FileNameURLs() -> [String:URL] {
+        var filePaths = [URL]() //URL array
+        var audioFileNames = [String]() //String array
+        var theResult = [String:URL]()
+
+        let bundlePath = Bundle.main.bundleURL
+        do {
+            try FileManager.default.createDirectory(atPath: bundlePath.relativePath, withIntermediateDirectories: true)
+            // Get the directory contents urls (including subfolders urls)
+            let directoryContents = try FileManager.default.contentsOfDirectory(at: bundlePath, includingPropertiesForKeys: nil, options: [])
+            
+            // filter the directory contents
+            filePaths = directoryContents.filter{ $0.pathExtension == "mp3" }
+            
+            //get the file names, without the extensions
+            audioFileNames = filePaths.map{ $0.deletingPathExtension().lastPathComponent }
+        } catch {
+            print(error.localizedDescription) //output the error
+        }
+        //print(audioFileNames) //for debugging purposes only
+        for loop in 0..<filePaths.count { //Build up the dictionary.
+            theResult[audioFileNames[loop]] = filePaths[loop]
+        }
+        return theResult
+    }
+    
+    
     func applyLadderShape(to button: UIButton, ofset: CGFloat) -> CGFloat {
         // Apply a mask to the ladder buttons to create the non-parallel ladder
         // ofset is passed in every time to make sure the bottom edge of the last button is the lenght of this buttons top edge
@@ -137,11 +165,12 @@ class ViewController: UIViewController {
     }
     
     func playerStep(){
-        let rung = rungs[playerIndex]
+        var rung = rungs[playerIndex]
         makeButtonUnfocused(to: rung)
         let x = rung.currentTitle
         rung.setTitle("", for: .normal)
         playerIndex += 1
+        rung = rungs[playerIndex]
         makeButtonSelected(to: rung)
         rung.setTitle(x, for: .normal)
         
@@ -154,7 +183,7 @@ class ViewController: UIViewController {
         if sourceVC!.playerWasCorrect { playerStep() }
         if sourceVC!.chaserWasCorrect { chaserStep() }
         
-        performSegue(withIdentifier: "toQuestion", sender: nil)
+        // performSegue(withIdentifier: "toQuestion", sender: nil)
         
     }
     
