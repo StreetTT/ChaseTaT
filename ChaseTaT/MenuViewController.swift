@@ -6,36 +6,14 @@
 //
 
 import UIKit
-
+// MARK: - Variables
 class MenuViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var namefield: UITextField!
-    
     @IBOutlet weak var scoreboardButton: UIButton!
-    @IBAction func ScoreboardButton(_ sender: Any) {
-    }
-    
     @IBOutlet weak var gameButton: UIButton!
-    @IBAction func GameButton(_ sender: Any) {
-        performSegue(withIdentifier: "toMainGame", sender: nil)
-    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        // Passes player's name to the main game
-        if segue.identifier == "toMainGame"{
-            let ViewController = segue.destination as! ViewController
-            ViewController.name = namefield.text ?? "Player"
-            ViewController.amount = -1
-        }
-        
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        namefield.resignFirstResponder()
-        GameButton(self)
-        return true
-    }
-    
+    // MARK: - Load + Segue
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set text and delegates
@@ -49,15 +27,27 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        // Passes player's name to the main game
+        if segue.identifier == "toMainGame"{
+            let ViewController = segue.destination as! ViewController
+            ViewController.name = namefield.text ?? "Player"
+            ViewController.amount = -1
+        }
+        
     }
-    */
+    // MARK: - Buttons and Input stuff
+    @IBAction func GameButton(_ sender: Any) {
+        performSegue(withIdentifier: "toMainGame", sender: nil)
+    }
+    @IBAction func ScoreboardButton(_ sender: Any) {
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        namefield.resignFirstResponder()
+        GameButton(self)
+        return true
+    }
+    
 
 }
