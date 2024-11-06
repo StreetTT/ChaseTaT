@@ -138,15 +138,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var chaserName: UILabel!
     @IBOutlet weak var currentWinnings: UILabel!
     @IBOutlet weak var playerName: UILabel!
+    var systemTicks : Timer?
+    var ticksCount = 0
+    var playerWasCorrect = false
+    var chaserWasCorrect = true
     
-    // MARK: - Load + Segue
+    // MARK: - Initial Load
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        playAudio("ladderMoment")
         
         // Set name and stuff
         playerName.text = name
-        currentWinnings.text = String(amount == -1  ? 0 : amount)
+        currentWinnings.text = "£" + String(amount == -1  ? 0 : amount)
         chaserName.text = ["The Beast", "The Man Mountain of Maths", "The Dark Destroyer", "The Barrister", "The Legal Eagle", "The Governess", "Frosty Knickers", "The Sinnerman" , "The Vixen", "The Bolton Brainiac", "The Badass", "The Kiwi Mastermind", "The Supernerd", "The 123"].randomElement()
         
         
@@ -180,38 +185,6 @@ class ViewController: UIViewController {
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        // Passes a unique question into the QuestionVC
-        if segue.identifier == "toQuestion"{
-            // Passes a unique question into the QuestionVC
-            let QuestionViewController = segue.destination as! QuestionViewController
-            var q = Int.random(in: 0..<(JSONQuestions.questions.count))
-            while questionsSeen.contains(q) {
-                q = Int.random(in: 0..<(JSONQuestions.questions.count))
-            }
-            questionsSeen.append(q)
-            QuestionViewController.question = JSONQuestions.questions[q]
-            QuestionViewController.name = name
-        }
-        
-    }
-    
-    @IBAction func unwindToMainGame(_ segue: UIStoryboardSegue){
-        // Unwind, relax your mind
-        // Run relevent checks and transition to the next VC
-        let sourceVC = segue.source as? QuestionViewController
-        let gameOver = betweenQuestionChecks(playerWasCorrect: sourceVC!.playerWasCorrect, chaserWasCorrect: sourceVC!.chaserWasCorrect)
-        
-        if gameOver {
-            
-        } else {
-            // performSegue(withIdentifier: "toQuestion", sender: nil)
-            
-        }
-        
-    }
-    
-    
     func applyLadderShape(to button: UIButton, ofset: CGFloat) -> CGFloat {
         // Apply a mask to the ladder buttons to create the non-parallel ladder
         // ofset is passed in every time to make sure the bottom edge of the last button is the lenght of this buttons top edge
@@ -236,7 +209,6 @@ class ViewController: UIViewController {
             return
         }
         playerIndex = rungs.firstIndex(of: sender)!
-        print("clicked rung \(playerIndex+1)")
         
         if (2...4).contains(playerIndex){
             makeButtonSelected(to: rungs[playerIndex])
@@ -253,6 +225,7 @@ class ViewController: UIViewController {
             }
             mainLabel.isHidden = true
             // Segue to Question Screen
+            stopAllAudio()
             performSegue(withIdentifier: "toQuestion", sender: nil)
             
         } else {
@@ -269,10 +242,64 @@ class ViewController: UIViewController {
         return [Int(Double(baseAmount * 3) * risk), Int(Double(baseAmount) * risk), Int(Double(baseAmount) * 0.5 * risk)]
         
     }
+
+    // MARK: - New Question
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        // Passes a unique question into the QuestionVC
+        if segue.identifier == "toQuestion"{
+            // Passes a unique question into the QuestionVC
+            let QuestionViewController = segue.destination as! QuestionViewController
+            var q = Int.random(in: 0..<(JSONQuestions.questions.count))
+            while questionsSeen.contains(q) {
+                q = Int.random(in: 0..<(JSONQuestions.questions.count))
+            }
+            questionsSeen.append(q)
+            QuestionViewController.question = JSONQuestions.questions[q]
+            QuestionViewController.name = name
+        }
+        
+    }
+    
+    @IBAction func unwindToMainGame(_ segue: UIStoryboardSegue){
+        // Unwind, relax your mind
+        // Run relevent checks and transition to the next VC
+        let sourceVC = segue.source as? QuestionViewController
+        playerWasCorrect = sourceVC!.playerWasCorrect
+        chaserWasCorrect = sourceVC!.chaserWasCorrect
+        // Start the systemTicks timmer
+        if systemTicks == nil {
+            systemTicks = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(tickClocked(_:)), userInfo: nil, repeats: true)
+        }
+        
+    }
+    
+    @objc func tickClocked(_ sender: UIButton) {
+        // timer to coreograpgh the ladder steps and game over moment
+        ticksCount += 1
+        if ticksCount == 8 {
+            if playerWasCorrect {
+                playerStep()
+            } else if chaserWasCorrect {
+                chaserStep()
+            } else {
+                gameOverCheck()
+            }
+        } else if ticksCount == 14 {
+            if playerWasCorrect && chaserWasCorrect {
+                chaserStep()
+            } else if playerWasCorrect || chaserWasCorrect  {
+                gameOverCheck()
+            }
+        } else if ticksCount == 20 {
+            gameOverCheck()
+        }
+    }
     
     
     func chaserStep(){
         // moves the red bar down
+        playAudio("ChaserStep")
         chaserIndex += 1
         makeButtonChasers(to: rungs[chaserIndex])
         if chaserIndex - 1 <= -1{
@@ -284,24 +311,44 @@ class ViewController: UIViewController {
     
     func playerStep(){
         // moves the blue bars down
+        playAudio("ContestantStep")
         var rung = rungs[playerIndex]
         makeButtonUnfocused(to: rung)
         let x = rung.currentTitle
         rung.setTitle("", for: .normal)
         playerIndex += 1
+        if playerIndex == 7 {
+            makeButtonUnfocused(to: rung)
+            currentWinnings.text = x
+            return
+        }
         rung = rungs[playerIndex]
         makeButtonSelected(to: rung)
         rung.setTitle(x, for: .normal)
         
     }
     
-    func betweenQuestionChecks(playerWasCorrect: Bool, chaserWasCorrect: Bool) -> Bool{
-        // Perform the relevent check, such as should the player or  chaser shoud step and if the game is over
-        if playerWasCorrect { playerStep() }
-        if chaserWasCorrect { chaserStep() }
-        return false
+    func gameOverCheck(){
+        // Checke the win conditions
+        if chaserIndex == playerIndex {
+            // The Game is Over.
+            playAudio("ChaserWins")
+            print("CHASER WIN")
+        } else if playerIndex == 7 {
+            print("PLAYER WIN")
+            
+        } else {
+            print("---")
+            if systemTicks != nil {
+                systemTicks?.invalidate()
+                systemTicks = nil
+            }
+            ticksCount = 0
+            performSegue(withIdentifier: "toQuestion", sender: nil)
+        }
+        
+        
     }
-    
 
 
 }

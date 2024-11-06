@@ -42,7 +42,6 @@ class QuestionViewController: UIViewController {
         unwindButton.isHidden = true
         makeButtonSelected(to: unwindButton)
         unwindButton.setTitle("Return to the Ladder", for: .normal)
-        audioClips = getAllMP3Players()
         playAudio("Question")
         unwindButton.addTarget(self, action: #selector(handleUnwind(_:)), for: .touchUpInside)
         
@@ -79,7 +78,7 @@ class QuestionViewController: UIViewController {
         }
         selectedAnswer = answers.firstIndex(of: sender)!
         if selectedAnswer == question!.correct - 1 { playerWasCorrect = true }
-        print("Selected: \(question!.answers[selectedAnswer]) ")
+        print("Player: \(question!.answers[selectedAnswer]) ")
         makeButtonHighlighted(to: answers[selectedAnswer])
         playAudio("ContestantLockIn")
         playerToken.isHidden = false
@@ -96,6 +95,7 @@ class QuestionViewController: UIViewController {
             }
             chaserWasCorrect = false
         }
+        print("Chaser: \(question!.answers[x]) ")
         return x
     }
     // MARK: - repeatedly Fired

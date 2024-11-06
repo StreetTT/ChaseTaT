@@ -16,7 +16,9 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Load + Segue
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Set text and delegates
+        // Set text aBownd delegates
+        audioClips = getAllMP3Players()
+        playAudio("Intro")
         namefield.delegate = self
         namefield.placeholder = "Enter your name"
         gameButton.setTitle("Start Game", for: .normal)
@@ -38,6 +40,7 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
     }
     // MARK: - Buttons and Input stuff
     @IBAction func GameButton(_ sender: Any) {
+        stopAllAudio()
         performSegue(withIdentifier: "toMainGame", sender: nil)
     }
     @IBAction func ScoreboardButton(_ sender: Any) {
