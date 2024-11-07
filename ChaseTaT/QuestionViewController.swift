@@ -34,7 +34,7 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set up the view with relvent text and states
+        // Set defaults
         chaserToken.isHidden = true
         playerToken.isHidden = true
         playerToken.text = name
@@ -103,10 +103,10 @@ class QuestionViewController: UIViewController {
     @objc func tickClocked() {
         // timer to coreograpgh the reveal of the correct answer and chasers answer
         ticksCount += 1
-        if ticksCount == 9 {
+        if ticksCount == 3 {
             makeButtonCorrect(to: answers[question!.correct - 1])
-            playAudio("Correct Answer")
-        } else if ticksCount == 21 {
+            playAudio("CorrectAnswer")
+        } else if ticksCount == 6 {
             makeButtonChasersAnswer(to: answers[chasersAnswer])
             playAudio("ChaserAnswer")
             unwindButton.isHidden = false
@@ -122,6 +122,11 @@ class QuestionViewController: UIViewController {
         timerCount -= 1 // deincrement our seconds counter
         clockText.text = String(format: "%02d", timerCount)
         
+        if timerCount == 6 {
+            stopAudio("Question")
+            playAudio("5Seconds")
+        }
+        
         if chaserTime == timerCount {
             chasersAnswer = calculateChaserAnswer()
             playAudio("ChaserLockIn")
@@ -135,10 +140,11 @@ class QuestionViewController: UIViewController {
                 timer = nil
             }
             stopAudio("Question")
+            stopAudio("5Seconds")
             clockText.isHidden = true
             // Start the systemTicks timmer
             if systemTicks == nil {
-                systemTicks = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(tickClocked), userInfo: nil, repeats: true)
+                systemTicks = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tickClocked), userInfo: nil, repeats: true)
             }
             
         }
