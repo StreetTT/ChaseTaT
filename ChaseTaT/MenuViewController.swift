@@ -6,18 +6,19 @@
 //
 
 import UIKit
+
 // MARK: - Variables
 class MenuViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var namefield: UITextField!
     @IBOutlet weak var scoreboardButton: UIButton!
     @IBOutlet weak var gameButton: UIButton!
-    var amount = -1
     var muted = false
     @IBOutlet weak var muteButton: UIButton!
     var systemTicks : Timer?
     var ticksCount = 0
     @IBOutlet weak var loadingView: UIView!
+    var scoresDict = UserDefaults.standard.dictionary(forKey: "scores") as? [String:Int] ?? [:]
     
     // MARK: - Load + Segue
     override func viewDidLoad() {
@@ -32,6 +33,8 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         scoreboardButton.setTitle("View Scoreboard", for: .normal)
         makeButtonHighlighted(to: gameButton)
         makeButtonHighlighted(to: scoreboardButton)
+        print(scoresDict)
+        
 
         // Do any additional setup after loading the view.
     }
@@ -40,18 +43,25 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         // Passes player's name to the main game
         if segue.identifier == "toMainGame"{
             let ViewController = segue.destination as! ViewController
-            ViewController.name = namefield.text ?? "Player"
-            ViewController.amount = amount
+            ViewController.name = (namefield.text ?? "Player")
+            ViewController.amount = if
+                let score = scoresDict[(namefield.text ?? "Player")]{
+                score
+            } else {
+                -1
+            }
+            
+        } else if segue.identifier == "toScores"{
+            let ScoresVC = segue.destination as! ScoresViewController
+            ScoresVC.sortedScores = scoresDict.sorted(by: {arg1, arg2 in  return arg1.value > arg2.value} )
         }
-        
     }
-    
+        
     @IBAction func unwindToPlayAgain(_ segue: UIStoryboardSegue){
         // Unwind, relax your mind
         // Unwinds just to segue back into the game with a new amount
-        let NewGameVC = segue.source as? NewGameViewController
+        _ = segue.source as? NewGameViewController
         loadingView.isHidden = false
-        amount = Int((NewGameVC!.winnigs).dropFirst())!
         // Start the systemTicks timmer
         if systemTicks == nil {
             systemTicks = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(tickClocked(_:)), userInfo: nil, repeats: true)
@@ -79,7 +89,7 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         let _ = segue.source as? NewGameViewController
         playAudio("Intro")
         namefield.text  = ""
-        amount = -1
+        scoresDict = UserDefaults.standard.dictionary(forKey: "scores") as? [String:Int] ?? [:]
         
               
     }
@@ -93,31 +103,24 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Clicking Return deoes the same as clicking Start Game
         namefield.resignFirstResponder()
         GameButton(self)
         return true
     }
     
-    // MARK: - Mute and Unmute
-    // Here you go Adam! 
-    
     @IBAction func MuteButton(_ sender: Any) {
-        mute()
-    }
-    
-    func mute() {
+        // Made spesifically for Adam and George!
         if muted {
             muteButton.setImage(UIImage(systemName: "speaker.wave.3.fill"), for: .normal)
-            audioClips = getAllMP3Players()
+            unmuteAll()
             playAudio("Intro")
             muted = false
         } else {
             muteButton.setImage(UIImage(systemName: "speaker.slash"), for: .normal)
-            stopAudio("Intro")
-            audioClips = [:]
+            muteAll()
             muted = true
         }
-        
     }
     
 

@@ -1,4 +1,3 @@
-//
 //  NewGameViewController.swift
 //  ChaseTaT
 //
@@ -27,6 +26,7 @@ class NewGameViewController: UIViewController {
         print("---")
         playAgainButton.setTitle("Play for More", for: .normal)
         mainMenuButton.setTitle("Cash Out", for: .normal)
+        mainMenuButton.addTarget(self, action: #selector(MainMenu(_:)), for: .touchUpInside)
         for button in [playAgainButton, mainMenuButton] {
             makeButtonHighlighted(to: button!)
         }
@@ -45,7 +45,15 @@ class NewGameViewController: UIViewController {
             playAgainButton.isHidden = true
             mainMenuButton.setTitle("Main Menu", for: .normal)
         }
+        
+    }
 
+    
+    @objc func MainMenu(_ sender:UIButton){
+        if let navigationController = self.navigationController{
+            navigationController.popToRootViewController(animated: false)
+        }
+        
     }
     
 

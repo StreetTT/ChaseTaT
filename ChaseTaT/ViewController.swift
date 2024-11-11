@@ -6,116 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
-
-// MARK: - JSON
-struct QuizQuestionData: Codable {
-    // [Given by Phill]
-    let category : String
-    var questions: [QuestionItems]
-}
-
-struct QuestionItems: Codable {
-    // [Given by Phill]
-    let question_text : String
-    let answers : [String]
-    let correct : Int
-}
-
-func getJSONQuestionData() -> QuizQuestionData? {
-    // Load in the JSON file that hold the questions [Given by Phill]
-
-    let bundleFolderURL = Bundle.main.url(forResource: "chase_questions", withExtension: "json")!
-    do {
-        let retrievedData = try Data(contentsOf: bundleFolderURL)
-        do {
-            let theQuizData = try JSONDecoder().decode(QuizQuestionData.self, from: retrievedData)
-            return theQuizData
-        } catch {
-            print("couldn't decode file contents"); return nil
-        }
-    } catch {
-        print("couldn't retrieve file contents"); return nil
-    }
-}
-
-// MARK: - Audio
-
-var audioClips = [String:AVAudioPlayer?]()
-
-func playAudio(_ name: String, restart: Bool = true) {
-    // play a given audio [Adapted from Phill's]
-    let audioPlayer = findAudio(name)
-    if (audioPlayer == nil) || (audioPlayer?.isPlaying == false) {
-        if restart {audioPlayer?.currentTime = 0}
-        audioPlayer?.play()
-    }
-}
-
-func findAudio(_ name: String) -> AVAudioPlayer? {
-    // linear search and find AudioPLayer Object
-    for (key,AVAP) in audioClips{
-        if key == name {
-            return AVAP
-        }
-    }
-    return nil
-}
-
-func stopAllAudio() {
-    // Loop through and stop all audio
-    for (key,_) in audioClips{
-        stopAudio(key)
-    }
-}
-
-func setupAudioPlayers(toPlay audioFileURL:URL) -> AVAudioPlayer? {
-    // Setup Audio Player obeject [Adapted from Phill's]
-    var audioPlayer: AVAudioPlayer?
-    do {
-        try audioPlayer = AVAudioPlayer(contentsOf: audioFileURL)
-        audioPlayer?.prepareToPlay()
-    } catch {
-        print("Can't play the audio \(audioFileURL.absoluteString)")
-        print(error.localizedDescription)
-    }
-    return audioPlayer
-}
- 
-func stopAudio(_ name: String) {
-    // stop a given audio [Adapted from Phill's]
-    let audioPlayer = findAudio(name)
-     if audioPlayer?.isPlaying == true {
-         audioPlayer?.stop()
-     }
- }
-
-func getAllMP3Players() -> [String:AVAudioPlayer?] {
-    // Get all MP3 Files [Given by Phill]
-    var filePaths = [URL]() //URL array
-    var audioFileNames = [String]() //String array
-    var theResult = [String:AVAudioPlayer?]()
-
-    let bundlePath = Bundle.main.bundleURL
-    do {
-        try FileManager.default.createDirectory(atPath: bundlePath.relativePath, withIntermediateDirectories: true)
-        // Get the directory contents urls (including subfolders urls)
-        let directoryContents = try FileManager.default.contentsOfDirectory(at: bundlePath, includingPropertiesForKeys: nil, options: [])
-        
-        // filter the directory contents
-        filePaths = directoryContents.filter{ $0.pathExtension == "mp3" }
-        
-        //get the file names, without the extensions
-        audioFileNames = filePaths.map{ $0.deletingPathExtension().lastPathComponent }
-    } catch {
-        print(error.localizedDescription) //output the error
-    }
-    //print(audioFileNames) //for debugging purposes only
-    for loop in 0..<filePaths.count { //Build up the dictionary.
-        theResult[audioFileNames[loop]] = setupAudioPlayers(toPlay: filePaths[loop])
-    }
-    return theResult
-}
 
 // MARK: - Variables
 class ViewController: UIViewController {
@@ -145,6 +35,7 @@ class ViewController: UIViewController {
     var chaserWasCorrect = true
     var playerWon = true
     var roundPrize = -1
+    var newWinnings = -1
     
     // MARK: - Initial Load
     
@@ -274,7 +165,7 @@ class ViewController: UIViewController {
             // Passes a unique question into the QuestionVC
             let NewGameViewController = segue.destination as! NewGameViewController
             NewGameViewController.win = playerWon
-            NewGameViewController.winnigs = "£" + String(roundPrize+(amount == -1  ? 0 : amount))
+            NewGameViewController.winnigs = "£" + String(newWinnings)
         }
         
     }
@@ -369,11 +260,12 @@ class ViewController: UIViewController {
             if chaserIndex == playerIndex {
                 ChaserWin()
             } else if playerIndex == 7 {
+                newWinnings = roundPrize+(amount == -1  ? 0 : amount)
                 PlayerWin()
+                saveScore()
             }
             
             mainLabel.isHidden = false
-            saveScore()
             if systemTicks == nil {
                 systemTicks = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(endingTickClocked(_:)), userInfo: nil, repeats: true)
             }
@@ -427,45 +319,11 @@ class ViewController: UIViewController {
     }
     
     func saveScore(){
+        var scoresDict = UserDefaults.standard.dictionary(forKey: "scores") ?? [:]
+        scoresDict[name] = newWinnings
+        UserDefaults.standard.set(scoresDict, forKey: "scores")
+        print(scoresDict)
         
     }
     
-}
-
-// MARK: - Button UI
-// The next few functions just change the way the buttons look
-func makeButtonSelected(to button: UIButton){
-    button.backgroundColor = UIColor(red: 5/255.0, green: 7/255.0, blue: 82/255.0, alpha: 1)
-    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-}
-
-func makeButtonHighlighted(to button: UIButton){
-    button.backgroundColor = UIColor(red: 7/255.0, green: 177/255.0, blue: 158/255.0, alpha: 1)
-    button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-    button.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-}
-
-func makeButtonUnfocused(to button: UIButton){
-    button.backgroundColor = UIColor(red: 10/255.0, green: 172/255.0, blue: 193/255.0, alpha: 1)
-    button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-}
-
-func makeButtonOptional(to button: UIButton){
-    button.backgroundColor = UIColor(red: 67/255.0, green: 113/255.0, blue: 110/255.0, alpha: 1)
-    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-}
-
-func makeButtonCorrect(to button: UIButton){
-    button.backgroundColor = UIColor(red: 75/255.0, green: 253/255.0, blue: 158/255.0, alpha: 1)
-    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-}
-
-func makeButtonChasersAnswer(to button: UIButton){
-    button.layer.borderWidth = 2
-    button.layer.borderColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1).cgColor
-}
-
-func makeButtonChasers(to button: UIButton){
-    button.backgroundColor = UIColor(red: 182/255.0, green: 35/255.0, blue: 15/255.0, alpha: 1)
-    button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
 }
