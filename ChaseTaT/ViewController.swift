@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     var questionsSeen : [Int] = []
     let JSONQuestions = getJSONQuestionData()!
     var name = ""
-    var amount = -1
+    var oldWinnings = -1
     @IBOutlet weak var mainlLabel: UILabel!
     var chaserIndex = -1
     @IBOutlet weak var chaserName: UILabel!
@@ -36,6 +36,7 @@ class ViewController: UIViewController {
     var playerWon = true
     var roundPrize = -1
     var newWinnings = -1
+    @IBOutlet weak var chasers: UIImageView!
     
     // MARK: - Initial Load
     
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
         
         // Set name and stuff
         playerName.text = name
-        currentWinnings.text = "£" + String(amount == -1  ? 0 : amount)
+        currentWinnings.text = "£" + String(oldWinnings == -1  ? 0 : oldWinnings)
         // These are just nicknames for chasers I found on wikipedia
         chaserName.text = ["The Beast", "The Man Mountain of Maths", "The Dark Destroyer", "The Barrister", "The Legal Eagle", "The Governess", "Frosty Knickers", "The Sinnerman" , "The Vixen", "The Bolton Brainiac", "The Badass", "The Kiwi Mastermind", "The Supernerd", "The 123"].randomElement()
         
@@ -122,6 +123,7 @@ class ViewController: UIViewController {
                 }
             }
             mainLabel.isHidden = true
+            chasers.isHidden = false
             
             // Segue to Question Screen
             stopAllAudio()
@@ -135,8 +137,8 @@ class ViewController: UIViewController {
     
     func decideMoney() -> [Int]{
         // Determine the starting offers for the round
-        let baseAmount = amount == -1 ? 1000 : amount
-        let risk = amount == -1 ? 1.0 : 1.2
+        let baseAmount = oldWinnings == -1 ? 1000 : oldWinnings
+        let risk = oldWinnings == -1 ? 1.0 : 1.2
         
         return [Int(Double(baseAmount * 3) * risk), Int(Double(baseAmount) * risk), Int(Double(baseAmount) * 0.5 * risk)]
         
@@ -260,12 +262,12 @@ class ViewController: UIViewController {
             if chaserIndex == playerIndex {
                 ChaserWin()
             } else if playerIndex == 7 {
-                newWinnings = roundPrize+(amount == -1  ? 0 : amount)
+                newWinnings = roundPrize+(oldWinnings == -1  ? 0 : oldWinnings)
                 PlayerWin()
-                saveScore()
             }
-            
+            saveScore(won: playerWon)
             mainLabel.isHidden = false
+            chasers.isHidden = true
             if systemTicks == nil {
                 systemTicks = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(endingTickClocked(_:)), userInfo: nil, repeats: true)
             }
@@ -318,11 +320,21 @@ class ViewController: UIViewController {
         }
     }
     
-    func saveScore(){
-        var scoresDict = UserDefaults.standard.dictionary(forKey: "scores") ?? [:]
-        scoresDict[name] = newWinnings
-        UserDefaults.standard.set(scoresDict, forKey: "scores")
-        print(scoresDict)
+    func saveScore(won:Bool){
+        // Saves the players score, overwriting their last score in their last live run
+        var scores: [Player] = loadScores()
+        let player = Player(name: name, score: (won ? newWinnings : oldWinnings), live: won)
+        
+        if let index = scores.firstIndex(where: {$0.name == name && $0.live }) {
+            scores[index] = player
+        } else {
+            scores.append(player)
+        }
+        
+       if let encodedScores = try? JSONEncoder().encode(scores) {
+           UserDefaults.standard.set(encodedScores, forKey: "scores")
+       }
+        print(scores)
         
     }
     

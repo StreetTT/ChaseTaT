@@ -8,10 +8,10 @@
 import UIKit
 
 class ScoresViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var sortedScores : [(String, Int)]  = []
+    var scores : [Player]  = []
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedScores.count < 10 ? sortedScores.count : 10
+        return scores.count < 10 ? scores.count : 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -19,7 +19,7 @@ class ScoresViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         var content = UIListContentConfiguration.cell()
         
-        content.text = "\(sortedScores[indexPath.row].0) : \(sortedScores[indexPath.row].1)"
+        content.text = "\(scores[indexPath.row].name) : \(scores[indexPath.row].score)"
 
         cell.contentConfiguration = content
         return cell

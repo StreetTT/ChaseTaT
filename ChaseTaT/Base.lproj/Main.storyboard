@@ -20,15 +20,8 @@
                                 <rect key="frame" x="45" y="7" width="438" height="256"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tête à Tête" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie5-oX-K50">
-                                <rect key="frame" x="100" y="199" width="200" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="namefield" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iAJ-zH-Etr">
-                                <rect key="frame" x="45" y="255" width="310" height="34"/>
+                                <rect key="frame" x="46" y="255" width="310" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" systemColor="tintColor"/>
@@ -36,7 +29,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3O-Bd-Gwd">
-                                <rect key="frame" x="142" y="308" width="118" height="35"/>
+                                <rect key="frame" x="142" y="359" width="118" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -48,7 +41,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HY1-xa-Tf2">
-                                <rect key="frame" x="120" y="363" width="162" height="35"/>
+                                <rect key="frame" x="120" y="414" width="162" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -56,12 +49,28 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="ScoreboardButton:" destination="nK6-GL-j0w" eventType="touchUpInside" id="MM6-6D-6m6"/>
                                     <segue destination="g8h-aJ-iNx" kind="presentation" identifier="toScores" id="87P-U4-dKB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ft2-e5-9Wo">
+                                <rect key="frame" x="122" y="470" width="156" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="instructionButton">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="jkC-zE-d1s" kind="presentation" id="ZYD-7W-GZu"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2x-hz-PJh">
+                                <rect key="frame" x="-59" y="650" width="518" height="918"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReK-6B-eTb">
-                                <rect key="frame" x="172" y="420" width="59" height="35"/>
+                                <rect key="frame" x="170" y="531" width="59" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -70,21 +79,32 @@
                                     <action selector="MuteButton:" destination="nK6-GL-j0w" eventType="touchUpInside" id="pvp-Ra-FAR"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2x-hz-PJh">
-                                <rect key="frame" x="-59" y="-22" width="518" height="918"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="statusLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thI-tY-HS3">
+                                <rect key="frame" x="15" y="316" width="370" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tête à Tête" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie5-oX-K50">
+                                <rect key="frame" x="101" y="199" width="200" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2GD-iL-EJI"/>
                         <color key="backgroundColor" red="0.58039218189999997" green="0.1215686351" blue="0.078431375319999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="gameButton" destination="G3O-Bd-Gwd" id="wN9-gO-b8q"/>
+                        <outlet property="instructionButton" destination="ft2-e5-9Wo" id="dZt-kR-rDW"/>
                         <outlet property="loadingView" destination="b2x-hz-PJh" id="UVs-Jp-Zee"/>
                         <outlet property="muteButton" destination="ReK-6B-eTb" id="4pJ-y2-1if"/>
                         <outlet property="namefield" destination="iAJ-zH-Etr" id="oSZ-gJ-Z8N"/>
                         <outlet property="scoreboardButton" destination="HY1-xa-Tf2" id="Woe-0S-BFw"/>
+                        <outlet property="statusLabel" destination="thI-tY-HS3" id="hRb-sp-5ZR"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="toMainGame" modalPresentationStyle="fullScreen" id="PRA-aR-LM5"/>
                     </connections>
                 </viewController>
@@ -139,6 +159,69 @@
             </objects>
             <point key="canvasLocation" x="-779.1044776119403" y="729.7482837528604"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="GN1-8C-QZg">
+            <objects>
+                <viewController id="jkC-zE-d1s" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4s2-RB-MWb">
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How To Play" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pzq-hh-XU9">
+                                <rect key="frame" x="89" y="44" width="224" height="48"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="InK-lX-1qo">
+                                <rect key="frame" x="16" y="169" width="370" height="519.33333333333337"/>
+                                <string key="text">1. Choose Your Starting Offer:
+Select one of the three money offers, each corresponding to a different starting position on the ladder.
+
+2. Answer Questions:
+The game will present you with a multiple-choice question and three possible answers. Both you and the chaser have 15 seconds to choose your answer.
+After you lock in your answer or the timer runs out, both your answer and the Chaser’s answer will be revealed. If you answered correctly, you move one step down the ladder. If the Chaser answered correctly, they move one step down the ladder.
+
+3. Continue the Round:
+The game continues, with new questions being presented until either:
+   - You reach the bottom of the ladder and win the round, securing your prize money.
+   - The Chaser catches you, and the round ends with no money won.
+
+4. Top the Leaderboard:
+All the money you accumulate across rounds is saved and added to your total until the Chaser catches you. Once you're caught, your winnings are forfeited, and you must start over from the beginning. Leaderboard names ARE CASE SENSITIVE (i.e: bow ≠ Bow)</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <lineBreakStrategy key="lineBreakStrategy" pushOut="YES"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzf-sq-DAN">
+                                <rect key="frame" x="16" y="94" width="370" height="61"/>
+                                <string key="text">Your objective is to make it down the seven-step ladder and escape with the money you’ve earned, all while staying ahead of the Chaser.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <lineBreakStrategy key="lineBreakStrategy" pushOut="YES"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="n4c-hU-kv2"/>
+                        <color key="backgroundColor" red="0.58431375029999999" green="0.1215686351" blue="0.078431375319999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="n4c-hU-kv2" firstAttribute="trailing" secondItem="Pzq-hh-XU9" secondAttribute="trailing" constant="89" id="AxG-Ik-jT0"/>
+                            <constraint firstItem="InK-lX-1qo" firstAttribute="top" secondItem="bzf-sq-DAN" secondAttribute="bottom" constant="14" id="EuE-pp-sWz"/>
+                            <constraint firstItem="Pzq-hh-XU9" firstAttribute="leading" secondItem="n4c-hU-kv2" secondAttribute="leading" constant="89" id="HZ8-1f-Gzg"/>
+                            <constraint firstItem="InK-lX-1qo" firstAttribute="leading" secondItem="n4c-hU-kv2" secondAttribute="leading" constant="16" id="JTO-sx-0ja"/>
+                            <constraint firstItem="bzf-sq-DAN" firstAttribute="top" secondItem="Pzq-hh-XU9" secondAttribute="bottom" constant="2" id="OtI-ym-VtY"/>
+                            <constraint firstItem="bzf-sq-DAN" firstAttribute="leading" secondItem="n4c-hU-kv2" secondAttribute="leading" constant="16" id="RAU-k8-XzR"/>
+                            <constraint firstItem="Pzq-hh-XU9" firstAttribute="top" secondItem="n4c-hU-kv2" secondAttribute="top" constant="44" id="Vp3-B2-nBz"/>
+                            <constraint firstItem="n4c-hU-kv2" firstAttribute="trailing" secondItem="InK-lX-1qo" secondAttribute="trailing" constant="16" id="fql-8Z-YhS"/>
+                            <constraint firstItem="n4c-hU-kv2" firstAttribute="trailing" secondItem="bzf-sq-DAN" secondAttribute="trailing" constant="16" id="txF-ac-FKC"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J5m-0y-WzX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-779.1044776119403" y="-700.22883295194504"/>
+        </scene>
         <!--New Game View Controller-->
         <scene sceneID="Try-oP-c1H">
             <objects>
@@ -147,42 +230,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ij2-zi-OaG">
-                                <rect key="frame" x="127" y="525" width="148" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="playAgainButton">
-                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="GameButton:" destination="nK6-GL-j0w" eventType="touchUpInside" id="wUO-wd-TzZ"/>
-                                    <segue destination="AiF-dL-wMt" kind="unwind" unwindAction="unwindToPlayAgain:" id="nfx-89-JjO"/>
-                                </connections>
-                            </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Winnings:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O44-wi-X8J">
-                                <rect key="frame" x="146" y="375" width="113" height="36"/>
+                                <rect key="frame" x="146" y="280" width="113" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="currentWinnings" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Hh-jr-7ol">
-                                <rect key="frame" x="109" y="419" width="185" height="36"/>
+                                <rect key="frame" x="109" y="324" width="185" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="mainLabel" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAM-bJ-gI9">
-                                <rect key="frame" x="21" y="314" width="361" height="53"/>
+                                <rect key="frame" x="21" y="219" width="361" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="40"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baz-Jv-Iiu">
-                                <rect key="frame" x="124" y="477" width="154" height="35"/>
+                                <rect key="frame" x="125" y="424" width="154" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -192,6 +262,19 @@
                                 <connections>
                                     <action selector="GameButton:" destination="nK6-GL-j0w" eventType="touchUpInside" id="4lb-Mx-wLt"/>
                                     <segue destination="AiF-dL-wMt" kind="unwind" unwindAction="unwindToMenu:" id="1OH-gu-KbB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ij2-zi-OaG">
+                                <rect key="frame" x="128" y="376" width="148" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="playAgainButton">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="GameButton:" destination="nK6-GL-j0w" eventType="touchUpInside" id="wUO-wd-TzZ"/>
+                                    <segue destination="AiF-dL-wMt" kind="unwind" unwindAction="unwindToPlayAgain:" id="nfx-89-JjO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -290,47 +373,51 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Player:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6p-x4-EbF">
-                                <rect key="frame" x="36" y="64" width="95" height="36"/>
+                                <rect key="frame" x="35" y="41" width="95" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="playerName" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFZ-G0-MMN">
-                                <rect key="frame" x="106" y="65" width="275" height="36"/>
+                                <rect key="frame" x="105" y="42" width="275" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Winnings:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-Qe-ubb">
-                                <rect key="frame" x="36" y="107" width="179" height="36"/>
+                                <rect key="frame" x="35" y="84" width="179" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="currentWinnings" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGU-Tj-CjN">
-                                <rect key="frame" x="219" y="108" width="167" height="36"/>
+                                <rect key="frame" x="218" y="85" width="167" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chaser:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rR-AG-NAw">
-                                <rect key="frame" x="36" y="151" width="108" height="36"/>
+                                <rect key="frame" x="35" y="128" width="108" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="chaserName" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hif-bE-Xxn">
-                                <rect key="frame" x="118" y="152" width="263" height="36"/>
+                                <rect key="frame" x="117" y="129" width="263" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BEAT_THE_CHASERS_SR4_01-removebg-preview.png" translatesAutoresizingMaskIntoConstraints="NO" id="gHg-aG-DQd">
+                                <rect key="frame" x="54" y="148" width="293" height="156"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -338,6 +425,7 @@
                     <navigationItem key="navigationItem" id="wAY-tG-BIn"/>
                     <connections>
                         <outlet property="chaserName" destination="hif-bE-Xxn" id="Pes-ib-xPk"/>
+                        <outlet property="chasers" destination="gHg-aG-DQd" id="dIt-GM-wy9"/>
                         <outlet property="currentWinnings" destination="OGU-Tj-CjN" id="4KF-W9-Do7"/>
                         <outlet property="mainLabel" destination="LWt-4b-5tz" id="tHe-Ki-EHy"/>
                         <outlet property="mainlLabel" destination="LWt-4b-5tz" id="Ub4-dD-5Xo"/>
@@ -456,6 +544,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BEAT_THE_CHASERS_SR4_01-removebg-preview.png" width="619" height="403"/>
         <image name="Logo.png" width="361" height="140"/>
         <image name="speaker.wave.3.fill" catalog="system" width="128" height="84"/>
         <systemColor name="labelColor">

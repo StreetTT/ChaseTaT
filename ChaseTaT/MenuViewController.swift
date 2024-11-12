@@ -18,22 +18,28 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
     var systemTicks : Timer?
     var ticksCount = 0
     @IBOutlet weak var loadingView: UIView!
-    var scoresDict = UserDefaults.standard.dictionary(forKey: "scores") as? [String:Int] ?? [:]
+    var scores: [Player] = loadScores()
+    @IBOutlet weak var instructionButton: UIButton!
+    @IBOutlet weak var statusLabel: UILabel!
     
     // MARK: - Load + Segue
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set defaults
+        namefield.addTarget(self, action: #selector(statusUpdate(_:)), for: .editingChanged)
+        statusLabel.isHidden = true
         loadingView.isHidden = true
         audioClips = getAllMP3Players()
         playAudio("Intro")
         namefield.delegate = self
         namefield.placeholder = "Enter your name"
         gameButton.setTitle("Start Game", for: .normal)
-        scoreboardButton.setTitle("View Scoreboard", for: .normal)
-        makeButtonHighlighted(to: gameButton)
-        makeButtonHighlighted(to: scoreboardButton)
-        print(scoresDict)
+        scoreboardButton.setTitle("View Leaderboard", for: .normal)
+        instructionButton.setTitle("How to Play", for: .normal)
+        for button in [gameButton, scoreboardButton, instructionButton] {
+            makeButtonHighlighted(to: button!)
+        }
+        print(scores)
         
 
         // Do any additional setup after loading the view.
@@ -44,16 +50,15 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "toMainGame"{
             let ViewController = segue.destination as! ViewController
             ViewController.name = (namefield.text ?? "Player")
-            ViewController.amount = if
-                let score = scoresDict[(namefield.text ?? "Player")]{
-                score
+            ViewController.oldWinnings = if let index = scores.firstIndex(where: {$0.name == namefield.text && $0.live }) {
+                scores[index].score
             } else {
                 -1
             }
             
         } else if segue.identifier == "toScores"{
             let ScoresVC = segue.destination as! ScoresViewController
-            ScoresVC.sortedScores = scoresDict.sorted(by: {arg1, arg2 in  return arg1.value > arg2.value} )
+            ScoresVC.scores = scores
         }
     }
         
@@ -62,6 +67,7 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         // Unwinds just to segue back into the game with a new amount
         _ = segue.source as? NewGameViewController
         loadingView.isHidden = false
+        scores = loadScores()
         // Start the systemTicks timmer
         if systemTicks == nil {
             systemTicks = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(tickClocked(_:)), userInfo: nil, repeats: true)
@@ -89,7 +95,9 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         let _ = segue.source as? NewGameViewController
         playAudio("Intro")
         namefield.text  = ""
-        scoresDict = UserDefaults.standard.dictionary(forKey: "scores") as? [String:Int] ?? [:]
+        scores = loadScores()
+        statusLabel.isHidden = true
+
         
               
     }
@@ -97,9 +105,6 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
     @IBAction func GameButton(_ sender: Any) {
         stopAllAudio()
         performSegue(withIdentifier: "toMainGame", sender: nil)
-    }
-    
-    @IBAction func ScoreboardButton(_ sender: Any) {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -122,6 +127,17 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
             muted = true
         }
     }
+    
+    // MARK: - Fancy Stuff
+    @objc func statusUpdate(_ textField: UITextField) {
+            // This method is called after every character press to show the score of the name typed in
+            if let index = scores.firstIndex(where: {$0.name == textField.text && $0.live }) {
+                statusLabel.text = "Current Score: \(String(scores[index].score))"
+                statusLabel.isHidden = false
+            } else {
+                statusLabel.isHidden = true
+            }
+        }
     
 
 }
